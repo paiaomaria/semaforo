@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('images/MAR.jfif');
+            background-size: cover;
+            background-position: center;
+            background-color: rgb(255, 246, 246);
+            background: linear-gradient(to bottom, #5acfe99f, #ffffffb9);
+        }
+ 
+        #imageContainer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: solid 10;
+        }
+ 
+        img {
+            width: 400px;
+            height: auto;
+            margin: 20px;
+            border-radius: solid 10;
+        }
+ 
+        h1 {
+            text-align: center;
+            color: white;
+            font-size: 24px;
+       
+           
+        }
+       
+       
+       
+    </style>
+</head>
+<body>
+ 
+    <div id="imageContainer">
+       
+    </div>
+ 
+    <script>
+        function carregarImagem() {
+            fetch('https://niloweb.com.br/transit-room/api/reg_endpoint.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data[0] && data[0].res) {
+                        const imagem = document.createElement('img');
+                        const condition = data[0].res;
+                        switch(condition) {
+                            case 'A':
+                                imagem.src = "imagem3.png";
+                                break;
+                            case 'B':
+                                imagem.src = "imagem.png";
+                                break;
+                            case 'L':
+                                imagem.src = "imagem2.png";
+                                break;
+                            default:
+                                console.error('Condição desconhecida:', condition);
+                        }
+                        document.getElementById('imageContainer').appendChild(imagem);
+                    } else {
+                        console.error('Erro ao carregar imagem da API.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao conectar à API:', error);
+                });
+        }
+        window.onload = carregarImagem;
+    </script>
+</body>
+</html>
